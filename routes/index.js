@@ -5,7 +5,7 @@ const git = require('simple-git')(require('path').resolve('./'))
 router.get('/', function(req, res, next) {
 
     git.status((err, status) => {
-        res.render('index', { title: 'Gui Git', status: status });
+        res.render('index', { title: 'Guilherme Git', status: status });
     })
 });
 
