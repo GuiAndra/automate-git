@@ -6,6 +6,7 @@ const git = require('simple-git')(require('path').resolve('./'))
 router.get('/', function(req, res, next) {
 
     git.status((err, status) => {
+        console.log(status)
         res.render('index', { title: 'Automate Git', status: status });
     })
 });

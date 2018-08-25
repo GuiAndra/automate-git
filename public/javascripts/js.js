@@ -7,7 +7,7 @@ $('.click-item').click(function (e) {
 
         var diffHtml = Diff2Html.getPrettyHtml(
             res.data,
-            {inputFormat: 'diff', showFiles: true, matching: 'lines', outputFormat: 'side-by-side'}
+            {inputFormat: 'diff', showFiles: true, matching: 'words', outputFormat: 'line-by-line'}
           );
         
         document.getElementById("content-file").innerHTML = diffHtml;

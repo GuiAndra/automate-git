@@ -10,6 +10,14 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
         
+        <!-- Git Diff -->
+        <link rel="stylesheet" type="text/css" href="dist/diff2html.css">
+        <script type="text/javascript" src="dist/diff2html.js"></script>
+        <script type="text/javascript" src="dist/diff2html-ui.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/scala.min.js"></script>
+
         <!-- AXios -->        
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
@@ -29,93 +37,40 @@
             </div>
         </header>
         <main>
-            <div class="container">
+            <div class="container-fluid">
                 <div class="row">
                     <div class="col-3">
 
-                        <% if(status.not_added.length > 0) { %>
+                        <% if(status.files.length > 0) { %>
 
                             <div class="row">
-                                <h2 class="text-center">
-                                    Files Not Added
-                                </h2>
-                                <ul class="text-center list-group">
-                                    <% for (file of status.not_added ){%>
-                                        <a href="#" class="list-group-item list-group-item-action click-item" data-file="<%= file %>">
-                                            
-                                            <%= file %>
-                                            
-                                        </a>
-                                    <% } %>
-                                </ul>
+                                <div class="col">
+                                    <h2 class="text-center">
+                                        Changed
+                                    </h2>
+                                    <ul class="text-center list-group">
+                                        <% for (file of status.files ){%>
+                                            <a href="#" class="list-group-item list-group-item-action click-item" data-file="<%= file.path %>">
+                                                
+                                                <%= file.path %>
+                                                
+                                            </a>
+                                        <% } %>
+                                    </ul>
+                                </div>
                             </div>
 
                         <% } %>
 
-                        <% if(status.created.length > 0) { %>
-
-                            <div class="row">
-                                <h2 class="text-center">
-                                    Files Created
-                                </h2>
-                                <ul class="text-center list-group">
-                                    <% for (file of status.created ){%>
-                                        <a href="#" class="list-group-item list-group-item-action click-item" data-file="<%= file %>">
-                                            
-                                            <%= file %>
-                                            
-                                        </a>
-                                    <% } %>
-                                </ul>
-                            </div>
-
-                        <% } %>
-
-                        <% if(status.modified.length > 0) { %>
-
-                            <div class="row mt-3">
-                                <h2 class="text-center">
-                                    Files Modified
-                                </h2>
-                                <ul class="text-center list-group">
-                                    <% for (file of status.modified ){%>
-                                        <a href="#" class="list-group-item list-group-item-action click-item" data-file="<%= file %>">
-                                            
-                                            <%= file %>
-                                            
-                                        </a>
-                                    <% } %>
-                                </ul>
-                            </div>
-
-                        <% } %>
-
-                        <% if(status.modified.deleted > 0) { %>
-                            <div class="row mt-3">
-                                <h2 class="text-center">
-                                    Files Deleted
-                                </h2>
-                                <ul class="text-center list-group">
-                                    <% for (file of status.deleted ){%>
-                                        <a href="#" class="list-group-item list-group-item-action click-item" data-file="<%= file %>">
-                                            
-                                            <%= file %>
-                                            
-                                        </a>
-                                    <% } %>
-                                </ul>
-                            </div>
-                        <% } %>
                     </div>
 
                     <div class="col-9">
-                        <figure>
-                            <pre>
-                                <code id="content-file">
-
-                                </code>
-                            </pre>
-                        </figure>
+                        <div class="row mt-5">
+                            <div class="col">
+                                <div id="content-file"></div>
+                            </div>
+                        </div>
+                        
                     </div>
                 </div>
             </div>
