@@ -33,6 +33,25 @@
                 <div class="row">
                     <div class="col-3">
 
+                        <% if(status.not_added.length > 0) { %>
+
+                            <div class="row">
+                                <h2 class="text-center">
+                                    Files Not Added
+                                </h2>
+                                <ul class="text-center list-group">
+                                    <% for (file of status.not_added ){%>
+                                        <a href="#" class="list-group-item list-group-item-action click-item" data-file="<%= file %>">
+                                            
+                                            <%= file %>
+                                            
+                                        </a>
+                                    <% } %>
+                                </ul>
+                            </div>
+
+                        <% } %>
+
                         <% if(status.created.length > 0) { %>
 
                             <div class="row">
