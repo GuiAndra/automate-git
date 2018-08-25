@@ -2,3 +2,11 @@
     margin: 0;
     padding: 0;
 }
+
+span.added{
+    background-color: rgba(36, 216, 23, .5)
+}
+
+span.minus{
+    background-color: rgba(255, 0, 0, .5)
+}
