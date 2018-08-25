@@ -4,8 +4,10 @@ $('.click-item').click(function (e) {
     let file = $(this).data('file')
 
     axios.post('file', { file: file }).then((res) => {
-        console.log(res)
+
+        console.log(res.data)
         
         $('#content-file').text(res.data)
+
     })
 })

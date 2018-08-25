@@ -39,7 +39,7 @@
                                 <h2 class="text-center">
                                     Files Created
                                 </h2>
-                                <ul class="text-center list-group list-files">
+                                <ul class="text-center list-group">
                                     <% for (file of status.created ){%>
                                         <a href="#" class="list-group-item list-group-item-action click-item" data-file="<%= file %>">
                                             
@@ -58,7 +58,7 @@
                                 <h2 class="text-center">
                                     Files Modified
                                 </h2>
-                                <ul class="text-center list-group list-files">
+                                <ul class="text-center list-group">
                                     <% for (file of status.modified ){%>
                                         <a href="#" class="list-group-item list-group-item-action click-item" data-file="<%= file %>">
                                             
@@ -76,7 +76,7 @@
                                 <h2 class="text-center">
                                     Files Deleted
                                 </h2>
-                                <ul class="text-center list-group list-files">
+                                <ul class="text-center list-group">
                                     <% for (file of status.deleted ){%>
                                         <a href="#" class="list-group-item list-group-item-action click-item" data-file="<%= file %>">
                                             
@@ -90,8 +90,9 @@
                     </div>
 
                     <div class="col-9">
-                        
-                        <pre id="content-file"></pre>
+                        <div class="mt-5">
+                            <pre id="content-file"></pre>
+                        </div>
                         
                     </div>
                 </div>
