@@ -6,16 +6,15 @@ const git = require('simple-git')(require('path').resolve('./'))
 router.get('/', function(req, res, next) {
 
     git.status((err, status) => {
-        console.log(status)
         res.render('index', { title: 'Automate Git', status: status });
     })
 });
 
-router.post('/file', function(req, res, next) {
+router.get('/file', function(req, res, next) {
 
-    let file = req.body.file
+    // let file = req.body.file
 
-    git.diff(['--', file], (err, diff) => {
+    git.diff((err, diff) => {
         res.send(diff);
     })
 });

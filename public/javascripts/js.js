@@ -1,16 +1,16 @@
-$('.click-item').click(function (e) {
-    e.preventDefault()
-    
-    let file = $(this).data('file')
 
-    axios.post('file', { file: file }).then((res) => {
+$(document).ready(function() {
 
-        var diffHtml = Diff2Html.getPrettyHtml(
-            res.data,
-            {inputFormat: 'diff', showFiles: true, matching: 'words', outputFormat: 'line-by-line'}
-          );
+    axios.get('file').then((res) => {
+
+        var diff2htmlUi = new Diff2HtmlUI({diff: res.data});
         
-        document.getElementById("content-file").innerHTML = diffHtml;
-
+        diff2htmlUi.draw('#content-file', {inputFormat: 'diff', outputFormat: 'side-by-side', showFiles: true, matching: 'lines', synchronisedScroll: true});
+        
+        diff2htmlUi.fileListCloseable('#content-file', true);
+        // diff2htmlUi.highlightCode('#content-file');
+    
     })
+
 })
+

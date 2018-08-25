@@ -37,52 +37,10 @@
             </div>
         </header>
         <main>
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-3">
+            <div class="container-fluid" id="content-file">
 
-                        <% if(status.files.length > 0) { %>
-
-                            <div class="row">
-                                <div class="col">
-                                    <h2 class="text-center">
-                                        Changed
-                                    </h2>
-                                    <ul class="text-center list-group">
-                                        <% for (file of status.files ){%>
-                                            <a href="#" class="list-group-item list-group-item-action click-item" data-file="<%= file.path %>">
-                                                
-                                                <%= file.path %>
-                                                
-                                            </a>
-                                        <% } %>
-                                    </ul>
-                                </div>
-                            </div>
-
-                        <% } else { %>
-
-                            <h5 class="text-center">
-                                
-                                On branch master<br>
-                                nothing to commit, working directory clean
-                                
-                            </h2>
-
-                        <% } %>
-
-                    </div>
-
-                    <div class="col-9">
-                        <div class="row mt-5">
-                            <div class="col">
-                                <div id="content-file"></div>
-                            </div>
-                        </div>
-                        
-                    </div>
-                </div>
             </div>
+               
         </main>
 
         <script src="/javascripts/js.js"></script>
