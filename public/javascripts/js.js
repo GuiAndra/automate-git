@@ -1,7 +1,7 @@
 
 $(document).ready(function() {
 
-    axios.get('file').then((res) => {
+    axios.get('diff').then((res) => {
 
         if(res.data.length > 0){
             

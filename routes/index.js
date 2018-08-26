@@ -4,12 +4,11 @@ const git = require('simple-git')(require('path').resolve('./'))
 
 router.get('/', function(req, res, next) {
 
-    git.status((err, status) => {
-        res.render('index', { title: 'Guilherme Git', status: status });
-    })
+    res.render('index', { title: 'Guilherme Git' });
+
 });
 
-router.get('/file', function(req, res, next) {
+router.get('/diff', function(req, res, next) {
 
     git.diff((err, diff) => {
         res.send(diff);
