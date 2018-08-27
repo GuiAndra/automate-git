@@ -1,14 +1,18 @@
 const express = require('express');
 const router = express.Router();
-const git = require('simple-git')(require('path').resolve('./'))
+const git = require('simple-git')
 
 router.get('/', function(req, res, next) {
 
-    res.render('index', { title: 'Guilherme Git' });
+    res.render('index', { title: 'Cplug Git' });
 
 });
 
-router.get('/diff', function(req, res, next) {
+router.post('/diff', function(req, res, next) {
+
+    let repo = req.body.repo
+
+    git('/var/www/' + repo)
 
     git.diff((err, diff) => {
         res.send(diff);
