@@ -19,6 +19,9 @@ $('#branch').keypress(function(e) {
                 diff2htmlUi.fileListCloseable('#content-file', true);
                 
             }else{
+                
+                $('#content-file').html('')
+
                 $('.nothing').removeClass('hidden')
             }
         
