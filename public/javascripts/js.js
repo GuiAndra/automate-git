@@ -17,7 +17,6 @@ $('#branch').keypress(function(e) {
                 });
                 
                 diff2htmlUi.fileListCloseable('#content-file', true);
-                diff2htmlUi.highlightCode('#content-file');
                 
             }else{
                 
