@@ -1,7 +1,8 @@
-$('#branch').keypress(function(e) {
-    if(e.which == 13) {
+$(window).ready(function(){
+    $('#repositories').change(function(e) {
+    
         axios.post('diff', { repo: $(this).val()}).then((res) => {
-
+    
             if(res.data.length > 0){
                 
                 $('.nothing').addClass('hidden')
@@ -21,11 +22,30 @@ $('#branch').keypress(function(e) {
             }else{
                 
                 $('#content-file').html('')
-
+    
                 $('.nothing').removeClass('hidden')
             }
         
         })
-    }
-})
+        
+    })
+    
+    $('#dumpautoload').click(function(e){
+        $(this).attr('disabled', 'true')
 
+        axios.post('dumpautoload', { repo: $('#repositories').val()}).then((res) => {
+            
+            $('#notifications').text(res.data)
+
+            $('#notifications').addClass('show')
+
+            $(this).removeAttr('disabled')
+
+            setTimeout(function(){ 
+                $('#notifications').text('')
+                jQuery('#notifications').removeClass('show') 
+            }, 2000);
+
+        })
+    })
+})
