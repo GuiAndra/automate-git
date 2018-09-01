@@ -94,8 +94,7 @@ router.post('/restart-gulp', function(req, res, next) {
         let command = 'killall gulp; gulp;'
 
         exec(command, function(error, stdout, stderr){
-            console.log(error,stdout,stderr)
-            res.send(stdout);
+            res.send([stdout,stderr]);
         });
 
     }
