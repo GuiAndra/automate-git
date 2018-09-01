@@ -26,7 +26,7 @@
     </head>
     <body>
         <header>
-            <div class="container">
+            <div class="container-fluid">
                 <div class="row mt-2">
                     <div class="col">
                         <h1 class="text-center">
@@ -34,14 +34,36 @@
                         </h1>
                     </div>
                 </div>
-                <div class="row mt-2">
+                <div class="row mt-2 align-items-center">
                     
-                    <label>Branch</label>
-                    <input type="text" class="form-control" id="branch">
-                    
+                    <div class="col-8" style="border-right: 1px solid rgba(0,0,0,0.3);">
+
+                        <div class="form-group">
+                            <label for="repositories">Repositories</label>
+                            <select class="form-control" id="repositories">
+                                <option value="">Selecione</option>
+                                <% repositories.forEach(function(repo) { %>
+                                    <option value="<%= repo %>"><%= repo %></option>
+                                <% }); %>
+                            </select>
+                        </div>
+
+                    </div>
+
+                    <div class="col-4">
+                        <h5 class="text-center">Actions</h5>
+                        <button class="btn btn-secondary" id="dumpautoload">Dumpautoload</button>
+                        <button class="btn btn-secondary" id="restart-gulp">Restart Gulp</button>
+                    </div>
+
                 </div>
             </div>
         </header>
+        <section>
+            <div class="container-fluid">
+                <div class="alert alert-dark fade" id="notifications"></div>
+            </div>
+        </section>
         <main class="mt-3">
             <div class="container-fluid">
                 <h4 class="text-center hidden nothing">
