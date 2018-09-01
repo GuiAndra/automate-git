@@ -1,9 +1,22 @@
 const express = require('express');
 const router = express.Router();
+const fs = require('fs')
+
+require('dotenv').config()
 
 router.get('/', function(req, res, next) {
 
-    res.render('index', { title: 'Cplug Git' });
+    let repositories = []
+
+    fs.readdir(process.env.REPOSITORIES_PATH, function(err, items) {
+     
+        repositories = items
+        
+    });
+
+    console.log(respositories)
+
+    res.render('index', { title: 'Cplug Git', repositories: repositories });
 
 });
 
