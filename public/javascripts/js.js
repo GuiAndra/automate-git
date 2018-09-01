@@ -1,4 +1,7 @@
 $(window).ready(function(){
+
+    $('.select2').select2()
+
     $('#repositories').change(function(e) {
     
         axios.post('diff', { repo: $(this).val()}).then((res) => {
@@ -34,6 +37,25 @@ $(window).ready(function(){
         $(this).attr('disabled', 'true')
 
         axios.post('dumpautoload', { repo: $('#repositories').val()}).then((res) => {
+            
+            $('#notifications').text(res.data)
+
+            $('#notifications').addClass('show')
+
+            $(this).removeAttr('disabled')
+
+            setTimeout(function(){ 
+                $('#notifications').text('')
+                jQuery('#notifications').removeClass('show') 
+            }, 2000);
+
+        })
+    })
+
+    $('#restart-gulp').click(function(e){
+        $(this).attr('disabled', 'true')
+
+        axios.post('restart-gulp', { repo: $('#repositories').val()}).then((res) => {
             
             $('#notifications').text(res.data)
 
