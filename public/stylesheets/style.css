@@ -6,3 +6,11 @@
 .hidden{
     display: none;
 }
+
+.link{
+    color:black;
+}
+
+.link:hover{
+    text-decoration: none;
+}

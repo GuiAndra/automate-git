@@ -26,9 +26,9 @@ router.get('/', function(req, res, next) {
 
 });
 
-//Retorna diff de um repositório
+//Retorna status de um repositório
 //param repo string
-router.post('/diff', function(req, res, next) {
+router.post('/status', function(req, res, next) {
 
     let repo = req.body.repo
 
@@ -41,7 +41,34 @@ router.post('/diff', function(req, res, next) {
 
     }else{
 
-        require('simple-git')(process.env.REPOSITORIES_PATH + repo).diff((err, diff) => {
+        require('simple-git')(process.env.REPOSITORIES_PATH + repo).status((err, status) => {
+            res.send(status);
+        })
+
+    }
+});
+
+//Retorna diff de um repositório
+//param repo string
+router.post('/diff', function(req, res, next) {
+
+    let repo = req.body.repo
+    let file = ['--']
+
+    if(req.body.file && req.body.file != 'all'){
+        file.push(req.body.file)
+    }
+
+    let excludeRrepo = process.env.EXCLUDE_REPO.split(',')
+
+    //Repositórios sem permissão
+    if(excludeRrepo.includes(repo)){
+
+        res.status(401).send('Unauthorized!');
+
+    }else{
+
+        require('simple-git')(process.env.REPOSITORIES_PATH + repo).diff(file,(err, diff) => {
             res.send(diff);
         })
 
