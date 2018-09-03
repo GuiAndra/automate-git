@@ -25,6 +25,16 @@ $(window).ready(function(){
     $('#repositories').change(function(e) {
 
         let repo = $(this).val()
+
+        if(!repo){
+            $('#content-files').html('')
+
+            $('.show-list-files').hide()
+
+            $('.nothing').removeClass('hidden')
+
+            return
+        }
     
         axios.post('diff', { repo: repo}).then((res) => {
     
@@ -60,6 +70,8 @@ $(window).ready(function(){
         axios.post('status', { repo: repo}).then((res) => {
 
             let nameFiles = $('#name-files').find('#dynamic')
+
+            nameFiles.html('')
 
             let html = ''
 
