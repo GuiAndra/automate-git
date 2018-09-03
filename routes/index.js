@@ -6,23 +6,9 @@ require('dotenv').config()
 
 //Rota para renderizar a view
 router.get('/', function(req, res, next) {
-
-    fs.readdir(process.env.REPOSITORIES_PATH, (err, items) => {
-        
-        let repositories = items
-
-        let includeRepo = process.env.INCLUDE_REPO.split(',')
-
-        for (i = 0; i < includeRepo.length; i++) {
-            if(! repositories.indexOf(includeRepo[i])){
-                let index = repositories.indexOf(includeRepo[i])
-                repositories.splice(index, 1)
-            }
-        }
-
-        res.render('index', { title: 'Cplug Git', repositories: repositories });
-
-    });
+    
+    let includeRepo = process.env.INCLUDE_REPO.split(',')
+    res.render('index', { title: 'Cplug Git', repositories: includeRepo });
 
 });
 
