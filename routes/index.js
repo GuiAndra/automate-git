@@ -92,10 +92,10 @@ router.post('/dumpautoload', function(req, res, next) {
 
         let exec = require('child_process').exec;
 
-        let command = 'php ' + process.env.REPOSITORIES_PATH + repo + '/artisan dumpautoload'
+        let command = 'composer dumpautoload -d ' + process.env.REPOSITORIES_PATH + repo
 
         exec(command, function(error, stdout, stderr){
-            res.send(stdout);
+            res.send([stdout, stderr]);
         });
 
     }
