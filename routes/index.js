@@ -11,14 +11,14 @@ router.get('/', function(req, res, next) {
         
         let repositories = items
 
-        let excludeRrepo = process.env.EXCLUDE_REPO.split(',')
+        let includeRepo = process.env.INCLUDE_REPO.split(',')
 
-        for (i = 0; i < excludeRrepo.length; i++) {
-            let index = repositories.indexOf(excludeRrepo[i])
-            repositories.splice(index, 1)
+        for (i = 0; i < includeRepo.length; i++) {
+            if(! repositories.indexOf(includeRepo[i])){
+                let index = repositories.indexOf(includeRepo[i])
+                repositories.splice(index, 1)
+            }
         }
-
-        // console.log(repositories)
 
         res.render('index', { title: 'Cplug Git', repositories: repositories });
 
@@ -32,10 +32,10 @@ router.post('/status', function(req, res, next) {
 
     let repo = req.body.repo
 
-    let excludeRrepo = process.env.EXCLUDE_REPO.split(',')
+    let includeRepo = process.env.INCLUDE_REPO.split(',')
 
     //Repositórios sem permissão
-    if(excludeRrepo.includes(repo)){
+    if(! includeRepo.includes(repo)){
 
         res.status(401).send('Unauthorized!');
 
@@ -59,10 +59,10 @@ router.post('/diff', function(req, res, next) {
         file.push(req.body.file)
     }
 
-    let excludeRrepo = process.env.EXCLUDE_REPO.split(',')
+    let includeRepo = process.env.INCLUDE_REPO.split(',')
 
     //Repositórios sem permissão
-    if(excludeRrepo.includes(repo)){
+    if(! includeRepo.includes(repo)){
 
         res.status(401).send('Unauthorized!');
 
@@ -81,10 +81,10 @@ router.post('/dumpautoload', function(req, res, next) {
 
     let repo = req.body.repo
 
-    let excludeRrepo = process.env.EXCLUDE_REPO.split(',')
+    let includeRepo = process.env.INCLUDE_REPO.split(',')
 
     //Repositórios sem permissão
-    if(excludeRrepo.includes(repo)){
+    if(! includeRepo.includes(repo)){
 
         res.status(401).send('Unauthorized!');
 
@@ -107,10 +107,10 @@ router.post('/restart-gulp', function(req, res, next) {
 
     let repo = req.body.repo
 
-    let excludeRrepo = process.env.EXCLUDE_REPO.split(',')
+    let includeRepo = process.env.INCLUDE_REPO.split(',')
 
     //Repositórios sem permissão
-    if(excludeRrepo.includes(repo)){
+    if(! includeRepo.includes(repo)){
 
         res.status(401).send('Unauthorized!');
 
