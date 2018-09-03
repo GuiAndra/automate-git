@@ -6,7 +6,7 @@ require('dotenv').config()
 
 //Rota para renderizar a view
 router.get('/', function(req, res, next) {
-    
+
     let includeRepo = process.env.INCLUDE_REPO.split(',')
     res.render('index', { title: 'Cplug Git', repositories: includeRepo });
 
@@ -78,7 +78,7 @@ router.post('/dumpautoload', function(req, res, next) {
 
         let exec = require('child_process').exec;
 
-        let command = 'composer dumpautoload -d ' + process.env.REPOSITORIES_PATH + repo
+        let command = 'php ~/.composer/composer.phar dumpautoload -d ' + process.env.REPOSITORIES_PATH + repo
 
         exec(command, function(error, stdout, stderr){
             res.send([stdout, stderr]);
