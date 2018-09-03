@@ -35,6 +35,9 @@ $(window).ready(function(){
 
             return
         }
+
+        var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?repo=' + repo;
+        window.history.pushState({path:newurl},'',newurl);
     
         axios.post('diff', { repo: repo}).then((res) => {
     
@@ -162,4 +165,106 @@ $(window).ready(function(){
 
         })
     })
+
+    if($('#repositories').val()){
+        
+        let repo = $('#repositories').val()
+
+        if(!repo){
+            $('#content-files').html('')
+
+            $('.show-list-files').hide()
+
+            $('.nothing').removeClass('hidden')
+
+            return
+        }
+    
+        axios.post('diff', { repo: repo }).then((res) => {
+    
+            if(res.data.length > 0){
+                
+                $('.nothing').addClass('hidden')
+    
+                var diff2htmlUi = new Diff2HtmlUI({diff: res.data});
+            
+                diff2htmlUi.draw('#content-files', {
+                    inputFormat: 'diff',
+                    outputFormat: 'side-by-side',
+                    showFiles: true,
+                    matching: 'lines',
+                    synchronisedScroll: true
+                });
+                
+                diff2htmlUi.fileListCloseable('#content-files', true);
+
+                $('.show-list-files').show()
+                
+            }else{
+                
+                $('#content-files').html('')
+
+                $('.show-list-files').hide()
+    
+                $('.nothing').removeClass('hidden')
+            }
+        
+        })
+
+        axios.post('status', { repo: repo}).then((res) => {
+
+            let nameFiles = $('#name-files').find('#dynamic')
+
+            nameFiles.html('')
+
+            let html = ''
+
+            $.each(res.data.files, (i, v) => {
+                
+                html += '<a href=""  class="file-link link" data-target="' + v.path +'">' + v.path +'</a> <br><br>'
+                
+            })
+
+            nameFiles.html(html)
+
+            $('.file-link').click(function(e) {
+                e.preventDefault()
+                
+                let repo = $('#repositories').val()
+                let file = $(this).data('target')
+            
+                axios.post('diff', { repo: repo, file: file}).then((res) => {
+            
+                    if(res.data.length > 0){
+                        
+                        $('.nothing').addClass('hidden')
+            
+                        var diff2htmlUi = new Diff2HtmlUI({diff: res.data});
+                    
+                        diff2htmlUi.draw('#content-files', {
+                            inputFormat: 'diff',
+                            outputFormat: 'side-by-side',
+                            showFiles: true,
+                            matching: 'lines',
+                            synchronisedScroll: true
+                        });
+                        
+                        diff2htmlUi.fileListCloseable('#content-files', true);
+        
+                        $('.show-list-files').show()
+                        
+                    }else{
+                        
+                        $('#content-files').html('')
+        
+                        $('.show-list-files').hide()
+            
+                        $('.nothing').removeClass('hidden')
+                    }
+                
+                })
+        
+            })
+        })       
+    }
 })

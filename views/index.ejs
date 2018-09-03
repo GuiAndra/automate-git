@@ -41,7 +41,7 @@
                             <select class="form-control select2" id="repositories">
                                 <option value="">Selecione</option>
                                 <% repositories.forEach(function(repo) { %>
-                                    <option value="<%= repo %>"><%= repo %></option>
+                                    <option value="<%= repo %>" <% if(locals.selectedRepo && selectedRepo == repo) { %> selected <% } %> ><%= repo %></option>
                                 <% }); %>
                             </select>
                         </div>
