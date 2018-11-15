@@ -90,8 +90,6 @@ router.post('/dumpautoload', function(req, res, next) {
     }
 });
 
-//executa comando exec killall gulp; gulp;
-//param repo string
 router.post('/restart-gulp', function(req, res, next) {
 
     let repo = req.body.repo
@@ -103,14 +101,90 @@ router.post('/restart-gulp', function(req, res, next) {
 
         res.status(401).send('Unauthorized!');
 
-    }else{
+    } else {
+        
+        let exec = require('child_process').exec;
+
+        //verifica se já existe um processo rodando
+        let checkAndKillCommand = "ps -aux | grep -v 'auto' | grep 'cd " + process.env.REPOSITORIES_PATH + repo + "; gulp watch' | cut -f 5 -d' ' | xargs kill"
+        const execCheckAndKill = exec(checkAndKillCommand);
+
+        execCheckAndKill.stdout.on('data', (data) => {
+            console.log(`stdout: ${data}`);
+
+            //Comando para iniciar o gulp watch
+            const ls = exec('cd /var/www/' + repo + '; gulp watch');                    
+        });
+            
+        execCheckAndKill.stderr.on('data', (data) => {
+            console.log(`stderr: ${data}`);
+        });
+            
+        execCheckAndKill.on('close', (code) => {
+
+            console.log(`child process exited with code ${code}`);
+
+            //Comando para iniciar o gulp watch
+            const ls = exec('cd ' + process.env.REPOSITORIES_PATH + repo + '; gulp watch');
+        });        
+
+        res.send(['Ok'])
+    }
+});
+
+router.post('/execute-gulp', function(req, res, next) {
+
+    let repo = req.body.repo
+
+    let includeRepo = process.env.INCLUDE_REPO.split(',')
+
+    //Repositórios sem permissão
+    if(! includeRepo.includes(repo)){
+
+        res.status(401).send('Unauthorized!');
+
+    } else {
+        
+        let exec = require('child_process').exec;
+
+        //verifica se já existe um processo rodando
+        let checkAndKillCommand = "ps -aux | grep -v 'auto' | grep 'cd '" + process.env.REPOSITORIES_PATH + repo + "; gulp watch' | cut -f 5 -d' ' | xargs kill"
+        const execCheckAndKill = exec(checkAndKillCommand);
+            
+        execCheckAndKill.on('close', (code) => {
+
+            console.log(`child process exited with code ${code}`);
+
+            //Comando para iniciar o gulp watch
+            exec('cd /var/www/' + repo + '; gulp', function(error, stdout, stderr){
+                res.send([stdout])
+            });      
+        });        
+    }
+});
+
+
+//executa comando php artisan dumpautoload no repositorio
+//param repo string
+router.post('/phpunit', function(req, res, next) {
+
+    let repo = req.body.repo
+
+    let includeRepo = process.env.INCLUDE_REPO.split(',')
+
+    //Repositórios sem permissão
+    if(! includeRepo.includes(repo)){
+
+        res.status(401).send('Unauthorized!');
+
+    } else {
 
         let exec = require('child_process').exec;
 
-        let command = 'killall gulp; gulp;'
+        let command = 'cd ' + process.env.REPOSITORIES_PATH + repo + '; vendor/bin/phpunit'
 
         exec(command, function(error, stdout, stderr){
-            res.send([stdout,stderr]);
+            res.send([stdout, stderr]);
         });
 
     }

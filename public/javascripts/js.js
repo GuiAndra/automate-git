@@ -24,15 +24,14 @@ $(window).ready(function(){
 
     $('#repositories').change(function(e) {
 
+        $('#notifications').html('').removeClass('show')
+
         let repo = $(this).val()
 
         if(!repo){
-            $('#content-files').html('')
-
+            $('#content-files').html('')            
             $('.show-list-files').hide()
-
             $('.nothing').removeClass('hidden')
-
             return
         }
 
@@ -142,13 +141,13 @@ $(window).ready(function(){
             setTimeout(function(){ 
                 $('#notifications').text('')
                 jQuery('#notifications').removeClass('show') 
-            }, 2000);
+            }, 4000);
 
         })
     })
 
     $('#restart-gulp').click(function(e){
-        $(this).attr('disabled', 'true')
+        $(this).attr('disabled', 'true')        
 
         axios.post('restart-gulp', { repo: $('#repositories').val()}).then((res) => {
             
@@ -157,14 +156,37 @@ $(window).ready(function(){
             $('#notifications').addClass('show')
 
             $(this).removeAttr('disabled')
+                   .addClass('btn-success')
 
             setTimeout(function(){ 
                 $('#notifications').text('')
                 jQuery('#notifications').removeClass('show') 
-            }, 2000);
+            }, 4000);
 
         })
     })
+
+    $('#execute-gulp').click(function(e){
+        $(this).attr('disabled', 'true')        
+
+        $('#notifications').text('Executing...').addClass('show')
+
+        axios.post('execute-gulp', { repo: $('#repositories').val()}).then((res) => {               
+            $('#notifications').html(res.data[0].replace(/\n/g, "<br>"))
+            $(this).removeAttr('disabled')               
+        })
+    })
+
+    $('#phpunit').click(function(e){
+        $(this).attr('disabled', 'true')        
+
+        $('#notifications').text('Executing...').addClass('show')
+
+        axios.post('phpunit', { repo: $('#repositories').val()}).then((res) => {               
+            $('#notifications').html(res.data[0].replace(/\n/g, "<br>"))
+            $(this).removeAttr('disabled')
+        })
+    })    
 
     if($('#repositories').val()){
         
